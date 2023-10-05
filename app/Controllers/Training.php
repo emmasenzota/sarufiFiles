@@ -8,6 +8,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
 
+const PUBLICPATH ='../public/';
+
 class Training extends Controller{
     use ResponseTrait;
 
@@ -16,66 +18,6 @@ class Training extends Controller{
     public    $request;
     public    $Client;
 
-    // trainig array 
-    /*
-    public const trainingArray = array(
-            'desc' => 'Sisi tunauza masaishuka na nguo za kiutamaduni, tunapatikana arusha',
-            'intents'=>[
-              'greets'=> [ 'hujambo', 'habari','za asubui', 'za mchana', 'mambo', 'niaje ','boss','mambo vipi', 'Za saizi'
-              ],
-              'goodbye'=> [ 'Asante', 'Karibu tena', 'Asante sana', 'Nashukuru boss'
-              ],
-              'order_shuka'=> [ 'Nahitaji masaishuka', 'Naitaji mashuka', 'Masai shuka zipo', 'Natoa order ya masaishuka','masaishuka','masaai shuka'
-              ],
-              'type_shuka'=> [ 'Zipo nyekundu', 'zipo mchanganyiko wa nyekundu na nyeusi', 'Kijani na bluu','Kijani','Nyekundu','bluu','ugoro','nyeusi','boks kubwa'],
-            ],
-            'flow'=>[
-                "greets"=> [
-                    "message"=> [
-                    "Mambo vipi, nikusaidieje mkuu?"
-                    ],
-                    "next_state"=> "order_shuka"
-                ],
-                "order_shuka"=> [
-                    "message"=> [
-                    "Sawa boss, Nikuwekee aina ipi boss? naomba nitajie rangi"
-                    ],
-                    "next_state"=> "type_shuka"
-                ],
-                "type_shuka"=> [
-                    "message"=> [
-                    "Sawa boss, izo zipo, Niweke mashuka mangapi?"
-                    ],
-                    "next_state"=> "number_of_shuka"
-                ],
-                "number_of_shuka" =>[
-                    "message"=> [
-                    "Sawa boss, naomba anwani yako au nipeleke gari gani?"
-                    ],
-                    "next_state" => "phone_number"
-                ],
-                "phone_number" => [
-                    "message" => [
-                    "Naomba na namba yako ya simu?"
-                    ],
-                    "next_state" => "ending_greetings"
-                ],
-                "ending_greetings" => [
-                    "message" => [
-                    "Nashukuru boss order yako inashuhulikiwa",
-                    "Asante sana boss mzigo wako uko tayari asante sana boss."
-                    ],
-                    "next_state" => "end"
-                ],
-                "goodbye" => [
-                    "message" => [
-                    "Bye",
-                    "Tuendelee kuwasiliana boss wangu"
-                    ],
-                    "next_state" => "end"
-                ]
-            ]
-    ); */
 
     // Replace Training array to JSON file 
 
@@ -84,6 +26,7 @@ class Training extends Controller{
     {
         $this->Sarufi = new Sarufi(confSarufi::$apiKey);
         $this->request = \Config\Services::request();
+        
     }
 
     public function trainWithArray(array $array) {
@@ -99,17 +42,30 @@ class Training extends Controller{
         }
     }
     /**
-     * @method trainWithJSON()
+     * @method trainWithFile()
      * 
      * @return Array | String
      */
-    public function trainWithFile() {
-        
+    public function trainWithFile(string $intentFile, string $flowFile, string $metadataFile) {
+        try {
+            $result = $this->Sarufi->updateFromFile(confSarufi::$botId ,$intentFile ,$flowFile ,$metadataFile,);
+
+            // on succes 
+            return $result;
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function index() {
-        // run the training method
-        // return $this->respond($this->trainWithArray($this::trainingArray));
+        // load in the files 
+        $metadata = PUBLICPATH . 'metadata.json';
+        $flow = PUBLICPATH . 'flow.json';
+        $intent = PUBLICPATH . 'intent.json';
+
+        $from_training = $this->trainWithFile($intent,$flow,$metadata);
+        return $this->respond($from_training);
     }
 
 }

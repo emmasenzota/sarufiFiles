@@ -1,0 +1,6 @@
+{
+        "greets": ["hujambo", "habari","za asubui", "za mchana", "mambo", "niaje ","boss","mambo vipi", "Za saizi"],
+        "goodbye": [ "Asante", "Karibu tena", "Asante sana", "Nashukuru boss"],
+        "order_shuka": [ "Nahitaji masaishuka", "Naitaji mashuka", "Masai shuka zipo", "Natoa order ya masaishuka","masaishuka","masaai shuka"],
+        "type_shuka": [ "Zipo nyekundu", "zipo mchanganyiko wa nyekundu na nyeusi", "Kijani na bluu","Kijani","Nyekundu","bluu","ugoro","nyeusi","boks kubwa"]
+}

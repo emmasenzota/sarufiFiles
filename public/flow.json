@@ -1,0 +1,52 @@
+{
+
+    "greets": {
+        "message": [
+            "Mambo vipi, nikusaidieje mkuu?"
+            ],
+            "next_state": "order_shuka"
+        },
+        
+    "order_shuka": {
+        "message": [
+            "Sawa boss, Nikuwekee aina ipi boss? naomba nitajie rangi"
+            ],
+            "next_state": "type_shuka"
+        },
+
+    "type_shuka": {
+        "message": [
+            "Sawa boss, izo zipo, Niweke mashuka mangapi?"
+            ],
+            "next_state": "number_of_shuka"
+        },
+
+    "number_of_shuka":{
+        "message": [
+            "Sawa boss, naomba anwani yako au nipeleke gari gani?"
+            ],
+            "next_state": "phone_number"
+        },
+
+    "phone_number": {
+        "message": [
+            "Naomba na namba yako ya simu?"
+            ],
+            "next_state": "ending_greetings"
+        },
+    "ending_greetings": {
+        "message": [
+            "Nashukuru boss order yako inashuhulikiwa",
+            "Asante sana boss mzigo wako uko tayari asante sana boss."
+            ],
+            "next_state": "end"
+    },
+
+    "goodbye": {
+        "message": [
+            "Bye",
+            "Tuendelee kuwasiliana boss wangu"
+            ],
+            "next_state": "end"
+    }
+}
