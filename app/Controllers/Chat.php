@@ -39,11 +39,28 @@ class Chat extends Controller
         
         $query = (String) json_decode(file_get_contents("php://input"));
 
-        $userQuery = empty($query) ? "Hi " : $query ;
+         $userQuery = empty($query) ? "Hi " : $query ;
 
         $sarufi = new AlphaSarufi(Sarufi::$apiKey);
         $response = $sarufi->chat(Sarufi::$botId,'123',$userQuery,'text','general');
 
         return $this->respond($response);
+    }
+     
+    public function chatWithBotCli($qn) {
+        // initiallising GuzzlehttpClient
+        $this->gClient = new Client();
+
+        //check for parameter passed if is empty 
+        $query = empty($qn) ? "mambo vipi" : $qn;
+
+        // authentication 
+        $sarufi = new AlphaSarufi(Sarufi::$apiKey);
+
+        //conversation with the chatbot
+        $responce = $sarufi->chat(Sarufi::$botId, '322', $query, 'text', 'general');
+
+        // respond to the request 
+        return $this->respond($responce);
     }
 }

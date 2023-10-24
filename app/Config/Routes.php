@@ -30,10 +30,13 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Chat::index');
-$routes->cli('training','Training::index'); // CLI routing
 
 // for our Sarufi API
 $routes->post('/chat','Chat::chatWithBot');
+
+// CLI routing
+$routes->cli('training','Training::index'); 
+$routes->cli('chat/withbot/(:segment)','Chat::chatWithBotCli/$1');
 
 /*
  * --------------------------------------------------------------------
